@@ -1,5 +1,7 @@
 ﻿
 public enum ProjectileTypes : byte
 {
-    SLUG
+    SLUG,
+    MISSILE,
+    SEEKER_MISSILE
 }

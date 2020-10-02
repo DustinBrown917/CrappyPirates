@@ -117,10 +117,10 @@ public abstract class Weapon : MonoBehaviour
 
     public class FiringParameters
     {
-        public GameObject target = null;
+        public Rigidbody target = null;
         public float power = 0.0f;
 
-        public FiringParameters(GameObject target, float power)
+        public FiringParameters(Rigidbody target, float power)
         {
             this.target = target;
             this.power = power;

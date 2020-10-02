@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlugLauncher : Weapon
+public class SeekerMissileLauncher : Weapon
 {
     public override void Fire(FiringParameters parameters)
     {
-        if(currentShotsInMagazine_.value <= 0 || !CanFire) { return; }
+        if (currentShotsInMagazine_.value <= 0 || !CanFire) { return; }
         Projectile p = ProjectileManager.RequestProjectile(projectileType);
-        
+
         if (p) {
             p.transform.position = launchPosition.position;
             p.transform.rotation = transform.rotation;
@@ -20,14 +20,14 @@ public class SlugLauncher : Weapon
                 p.Body.velocity = (p.transform.forward * power) + relativeBody.velocity;
             } else {
                 p.Body.velocity = p.transform.forward * power;
-            }           
+            }
         }
 
         currentShotsInMagazine_.value--;
 
         StartCooldown();
 
-        if(currentShotsInMagazine_.value <= 0) {
+        if (currentShotsInMagazine_.value <= 0) {
             StartReloading();
         }
     }

@@ -9,6 +9,7 @@ using UnityEngine.Assertions.Must;
 
 public class WeaponsModule : ShipModule
 {
+    [SerializeField] private Rigidbody DEBUG_TARGET = null;
     [SerializeField] private Dictionary<Batteries, Battery> batteries = new Dictionary<Batteries, Battery>();
 
     private Batteries activeBattery_ = default;
@@ -125,10 +126,11 @@ public class WeaponsModule : ShipModule
         } else { return null; }
     }
 
-    public void FireBattery(Batteries battery, GameObject target, float power)
+    public void FireBattery(Batteries battery, Rigidbody target, float power)
     {
         if (batteries.ContainsKey(battery)) {
-            batteries[battery].Fire(target, power);
+            //batteries[battery].Fire(target, power);
+            batteries[battery].Fire(DEBUG_TARGET, power);
         }
     }
 
@@ -278,7 +280,7 @@ public class WeaponsModule : ShipModule
             }
         }
 
-        public void Fire(GameObject target, float power)
+        public void Fire(Rigidbody target, float power)
         {
             foreach (WeaponMount wm in weapons) {
                 wm.Fire(target, power);

@@ -76,39 +76,12 @@ public class WeaponMount : MonoBehaviour
         }
     }
 
-    public void Fire(GameObject target, float power)
+    public void Fire(Rigidbody target, float power)
     {
         foreach(Weapon w in weapons) {
             if (w.RequiresTarget && target == null) { return; }
             w.Fire(new Weapon.FiringParameters(target, power));           
         }
-    }
-
-    public void StartAutoRotate()
-    {
-        StopAutoRotate();
-        cr_AutoRotate = StartCoroutine(AutoRotate());
-    }
-
-    private void StopAutoRotate()
-    {
-        if(cr_AutoRotate != null) {
-            StopCoroutine(cr_AutoRotate);
-        }
-        cr_AutoRotate = null;
-    }
-
-    private IEnumerator AutoRotate()
-    {
-        while(Mathf.Abs(currentRot - targetRotation_) > 0.1f) {
-            bool clockWise = (invertRotation_? -1 : 1) * targetRotation_ > currentRot;
-
-            Rotate(clockWise, Time.deltaTime);
-            yield return null;
-        }
-
-        cr_AutoRotate = null;
-
     }
 }
 

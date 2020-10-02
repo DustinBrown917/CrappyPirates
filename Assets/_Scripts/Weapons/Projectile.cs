@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
         body_ = GetComponent<Rigidbody>();
     }
 
-    public void Arm(GameObject target, params Collider[] launcherColliders)
+    public virtual void Arm(Rigidbody target, params Collider[] launcherColliders)
     {
         this.launcherColliders = launcherColliders;
         StartIgnoringLaunchCollider(ignoreLauncherColliderDuration);
@@ -41,7 +41,13 @@ public class Projectile : MonoBehaviour
         e.transform.position = transform.position;
         e.Explode();
         gameObject.SetActive(false);
+        ResetClean();
+    }
+
+    protected virtual void ResetClean()
+    {
         Body.velocity = new Vector3();
+        Body.angularVelocity = new Vector3();
         ProjectileManager.PoolProjectile(this);
         StopIgnoringLaunchColliders();
     }
