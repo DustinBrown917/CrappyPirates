@@ -7,8 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Ship : MonoBehaviour, ICameraFocusObject
 {
-    private NavigationModule navigation;
-    private WeaponsModule weapons;
+    private NavigationModule navigation = null;
+    private WeaponsModule weapons = null;
+    private DefensesModule defenses = null;
 
     private Rigidbody body_ = null;
     public Rigidbody Body { get => body_; }
@@ -24,12 +25,14 @@ public class Ship : MonoBehaviour, ICameraFocusObject
         body_ = GetComponent<Rigidbody>();
         navigation = GetComponent<NavigationModule>();
         weapons = GetComponent<WeaponsModule>();
+        defenses = GetComponent<DefensesModule>();
     }
 
     protected void Start()
     {
         navigation.Initialize();
         weapons.Initialize();
+        defenses.Initialize();
 
         GameCamera.MainCamera.gameObject.GetComponent<BoundingCamera>().AddBoundingObject(this);
     }

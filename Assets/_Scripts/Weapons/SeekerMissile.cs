@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SeekerMissile : Missile
@@ -12,6 +10,11 @@ public class SeekerMissile : Missile
     private Coroutine cr_SteeringDelay = null;
 
     private Vector3 compensation = new Vector3();
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawLine(transform.position, transform.position + compensation);
+    }
 
     public override void Arm(Rigidbody target, params Collider[] launcherColliders)
     {
@@ -52,10 +55,7 @@ public class SeekerMissile : Missile
         return dir * acceleration;
     }
 
-    private void OnDrawGizmos()
-    {
-        Debug.DrawLine(transform.position, transform.position + compensation);
-    }
+
 
     private Vector3 GetVelocityCompensation(Vector3 directionNormal, Vector3 velocityNormal)
     {

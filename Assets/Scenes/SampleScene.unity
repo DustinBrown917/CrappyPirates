@@ -870,10 +870,11 @@ GameObject:
   - component: {fileID: 120975563}
   - component: {fileID: 120975561}
   - component: {fileID: 120975564}
+  - component: {fileID: 120975567}
   - component: {fileID: 120975562}
   - component: {fileID: 120975565}
   - component: {fileID: 120975566}
-  - component: {fileID: 120975567}
+  - component: {fileID: 120975568}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -996,6 +997,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityInfluenceFactor_: 1
+--- !u!114 &120975568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120975560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b0b3128133f6f34f8fbd47d305fcf6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIModulePrefab: {fileID: 5679167980295996144, guid: 340d3d2eaa6914b44bafcf0821b03339,
+    type: 3}
+  isLocalPlayerControlled_: 1
 --- !u!4 &123206874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 978847845891511557, guid: 9ba41c7640b56ee46ac22654719fcc5d,
@@ -9132,10 +9148,11 @@ GameObject:
   - component: {fileID: 1381983183}
   - component: {fileID: 1381983182}
   - component: {fileID: 1381983181}
+  - component: {fileID: 1381983177}
   - component: {fileID: 1381983180}
   - component: {fileID: 1381983179}
   - component: {fileID: 1381983178}
-  - component: {fileID: 1381983177}
+  - component: {fileID: 1381983184}
   m_Layer: 0
   m_Name: Ship (1)
   m_TagString: Untagged
@@ -9258,6 +9275,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 89.39, z: 0}
+--- !u!114 &1381983184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381983176}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b0b3128133f6f34f8fbd47d305fcf6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIModulePrefab: {fileID: 5679167980295996144, guid: 340d3d2eaa6914b44bafcf0821b03339,
+    type: 3}
+  isLocalPlayerControlled_: 0
 --- !u!1001 &1384842458
 PrefabInstance:
   m_ObjectHideFlags: 0
