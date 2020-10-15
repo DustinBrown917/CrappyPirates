@@ -1,10 +1,8 @@
 ﻿using Mirror;
 using Sirenix.OdinInspector;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

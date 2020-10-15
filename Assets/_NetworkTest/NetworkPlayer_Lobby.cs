@@ -19,10 +19,20 @@ namespace CrappyPirates
         private bool isReady_ = false;
         public bool IsReady { get => isReady_; set => isReady_ = value; }
 
+        [SyncVar(hook = nameof(HandleCommandingModuleChanged))]
+        private ModuleTypes commandingModule_ = ModuleTypes.NONE;
+        public ModuleTypes CommandingModule { get => commandingModule_; }
+
+        [SyncVar(hook = nameof(HandleTeamChanged))]
+        private int team_ = 0;
+        public int Team { get => team_; }
+
         private CP_NetworkManager room_ = null;
 
         public event EventHandler<ValueChangedArgs<string>> DisplayNameChanged;
         public event EventHandler<ValueChangedArgs<bool>> ReadyStateChanged;
+        public event EventHandler<ValueChangedArgs<ModuleTypes>> CommandingModuleChanged;
+        public event EventHandler<ValueChangedArgs<int>> TeamChanged;
 
         private CP_NetworkManager Room
         {
@@ -61,6 +71,28 @@ namespace CrappyPirates
         }
 
         [Command]
+        private void CmdSetCommandingModule(ModuleTypes moduleType)
+        {
+            commandingModule_ = moduleType;
+        }
+
+        public void SetCommandingModule(ModuleTypes moduleType)
+        {
+            CmdSetCommandingModule(moduleType);
+        }
+
+        [Command]
+        private void CmdSetTeam(int team)
+        {
+            team_ = team;
+        }
+
+        public void SetTeam(int team)
+        {
+            CmdSetTeam(team);
+        }
+
+        [Command]
         private void CmdToggleReady()
         {
             isReady_ = !isReady_;
@@ -81,6 +113,16 @@ namespace CrappyPirates
         public void HandleDisplayNameChanged(string oldValue, string newValue)
         {
             DisplayNameChanged?.Invoke(this, new ValueChangedArgs<string>(oldValue, newValue));
+        }
+
+        public void HandleCommandingModuleChanged(ModuleTypes oldValue, ModuleTypes newValue)
+        {
+            CommandingModuleChanged?.Invoke(this, new ValueChangedArgs<ModuleTypes>(oldValue, newValue));
+        }
+
+        public void HandleTeamChanged(int oldValue, int newValue)
+        {
+            TeamChanged?.Invoke(this, new ValueChangedArgs<int>(oldValue, newValue));
         }
     } 
 }
