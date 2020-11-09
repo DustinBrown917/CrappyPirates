@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 624156576777706259}
   - component: {fileID: 1528476388176416610}
   - component: {fileID: 8113648225047565207}
+  - component: {fileID: 2683527634079883972}
   m_Layer: 9
   m_Name: Seeker Missile
   m_TagString: Untagged
@@ -84,6 +85,18 @@ MonoBehaviour:
   maxSpeed: 0
   lifeTime: 99
   delayBeforeSteering: 1
+--- !u!114 &2683527634079883972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3056638968025812171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51850c5b76e52a54eb812d8f96321e15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   compensationStrength: 4
 --- !u!1 &3960794776262220690
 GameObject:

@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
     private Rigidbody body_ = null;
     public Rigidbody Body { get => body_; }
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         myCollider = GetComponent<Collider>();
         body_ = GetComponent<Rigidbody>();
