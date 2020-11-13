@@ -6,8 +6,13 @@ using VoronoiLib.Structures;
 
 public class ForuneSiteMono : MonoBehaviour
 {
-    public FortuneSite GetSite()
+    public bool transposeZ = false;
+    public FortuneSite GetSite(bool zBased = false)
     {
-        return new FortuneSite(transform.position.x, transform.position.y);
+        if (zBased) {
+            return new FortuneSite(transform.position.x, transform.position.z);
+        } else {
+            return new FortuneSite(transform.position.x, transform.position.y);
+        }
     } 
 }

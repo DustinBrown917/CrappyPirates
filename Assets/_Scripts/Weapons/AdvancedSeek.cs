@@ -8,20 +8,24 @@ using UnityEngine;
 public class AdvancedSeek : MonoBehaviour
 {
     private Rigidbody Body;
-    private Rigidbody target;
     [SerializeField] private float compensationStrength = 1.0f;
     private Vector3 compensation = new Vector3();
     private float acceleration = 2.0f;
+
+    private void Awake()
+    {
+        Body = GetComponent<Rigidbody>();
+    }
 
     /// <summary>
     /// Compensated seek.
     /// </summary>
     /// <returns></returns>
-    public Vector3 GetSteering()
+    public Vector3 GetSteering(Rigidbody target)
     {
         Vector3 dir = (target.position - transform.position).normalized;
 
-        compensation = GetVelocityCompensation(dir, Body.velocity.normalized);
+        compensation = GetVelocityCompensation(dir, Body.velocity.normalized, target);
         return (dir * acceleration) + compensation;
     }
 
@@ -30,7 +34,7 @@ public class AdvancedSeek : MonoBehaviour
     /// Plain ol' seek. Orbits galore.
     /// </summary>
     /// <returns></returns>
-    public Vector3 GetSteering_Boring()
+    public Vector3 GetSteering_Boring(Rigidbody target)
     {
         Vector3 dir = (target.position - transform.position).normalized;
 
@@ -41,7 +45,7 @@ public class AdvancedSeek : MonoBehaviour
 
 
 
-    private Vector3 GetVelocityCompensation(Vector3 directionNormal, Vector3 velocityNormal)
+    private Vector3 GetVelocityCompensation(Vector3 directionNormal, Vector3 velocityNormal, Rigidbody target)
     {
         Vector3 velDifference = (Body.velocity - target.velocity);
         velocityNormal = velDifference.normalized;

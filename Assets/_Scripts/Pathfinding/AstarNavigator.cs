@@ -4,7 +4,7 @@ using UnityEngine;
 public static class AstarNavigator
 {
 
-    public static List<NavigationNode> GetPath(NavigationNode start, NavigationNode end)
+    public static Stack<NavigationNode> GetPath(NavigationNode start, NavigationNode end)
     {
         Heap<NavigationNode> frontier = new Heap<NavigationNode>(100);
         Dictionary<NavigationNode, NavigationNode> cameFrom = new Dictionary<NavigationNode, NavigationNode>();
@@ -37,15 +37,13 @@ public static class AstarNavigator
             }
         }
 
-        Debug.Log(cameFrom.Count);
-
-        List<NavigationNode> finalPath = new List<NavigationNode>();
+        Stack<NavigationNode> finalPath = new Stack<NavigationNode>();
         NavigationNode n = end;
-        finalPath.Add(n);
+        finalPath.Push(n);
 
         while (n != start) {
             n = cameFrom[n];
-            finalPath.Add(n);
+            finalPath.Push(n);
         }
 
         return finalPath;

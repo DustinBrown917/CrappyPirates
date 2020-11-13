@@ -1,7 +1,6 @@
 ﻿using System;
 
 //derived from Sebastian Lague https://www.youtube.com/watch?v=3Dw5d7PlcTM
-
 public class Heap<T> where T : IHeapItem<T>
 {
     private T[] items;

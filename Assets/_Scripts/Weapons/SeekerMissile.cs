@@ -12,6 +12,7 @@ public class SeekerMissile : Missile
 
     protected override void Awake()
     {
+        base.Awake();
         seeker = GetComponent<AdvancedSeek>();
     }
 
@@ -33,9 +34,12 @@ public class SeekerMissile : Missile
 
     protected override void FixedUpdate()
     {
-        if(!shouldSteer) { return; }
-        Vector3 steering = seeker.GetSteering();
-        if(target == null) { HandleImpact(); }
+        if (target == null) { 
+            HandleImpact();
+            return;
+        }
+        if (!shouldSteer) { return; }
+        Vector3 steering = seeker.GetSteering(target);
         Body.velocity += steering * Time.fixedDeltaTime;
         transform.forward = steering.normalized;
 

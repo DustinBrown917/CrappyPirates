@@ -9,7 +9,7 @@ public class PathFindingTester : MonoBehaviour
 {
     public const float NODE_CONNECTION_RANGE = 4.0f;
 
-    private List<NavigationNode> path = new List<NavigationNode>();
+    private Stack<NavigationNode> path = new Stack<NavigationNode>();
 
     [SerializeField] private NavigationNode startNode = null;
     [SerializeField] private NavigationNode endNode = null;
@@ -33,28 +33,35 @@ public class PathFindingTester : MonoBehaviour
 
         Debug.Log(edges.Count);
 
-        Dictionary<Vector2, NavigationNode> navNodes = new Dictionary<Vector2, NavigationNode>();
+        Dictionary<Vector3, NavigationNode> navNodes = new Dictionary<Vector3, NavigationNode>();
 
         int i = 1;
 
         foreach(VEdge edge in edges) {
-            if (!navNodes.ContainsKey(edge.Start)) {
-                navNodes.Add(edge.Start, new GameObject("VoronoiNavNode" + i).AddComponent<NavigationNode>());
-                navNodes[edge.Start].transform.position = (Vector2)edge.Start;
+            Vector3 start = TransposeToZ(edge.Start);
+            Vector3 end = TransposeToZ(edge.End);
+
+            if (!navNodes.ContainsKey(start)) {
+                navNodes.Add(start, new GameObject("VoronoiNavNode" + i).AddComponent<NavigationNode>());
+                navNodes[start].transform.position = start;
                 i++;
             }
 
-            if (!navNodes.ContainsKey(edge.End)) {
-                navNodes.Add(edge.End, new GameObject("VoronoiNavNode" + i).AddComponent<NavigationNode>());
-                navNodes[edge.End].transform.position = (Vector2)edge.End;
+            if (!navNodes.ContainsKey(end)) {
+                navNodes.Add(end, new GameObject("VoronoiNavNode" + i).AddComponent<NavigationNode>());
+                navNodes[end].transform.position = end;
                 i++;
             }
 
-            navNodes[edge.Start].AddConnectedNode(navNodes[edge.End]);
-            navNodes[edge.End].AddConnectedNode(navNodes[edge.Start]);
+            navNodes[start].AddConnectedNode(navNodes[end]);
+            navNodes[end].AddConnectedNode(navNodes[start]);
         }
     }
 
+    private Vector3 TransposeToZ(VPoint p)
+    {
+        return new Vector3((float)p.X, 0, (float)p.Y);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -72,14 +79,7 @@ public class PathFindingTester : MonoBehaviour
         Gizmos.color = Color.white;
         if(edges.Count > 1) {
             foreach(VEdge edge in edges) {
-                Gizmos.DrawLine(new Vector3((float)edge.Start.X, (float)edge.Start.Y, 0), new Vector3((float)edge.End.X, (float)edge.End.Y, 0));
-            }
-        }
-
-        Gizmos.color = Color.red;
-        if (path.Count > 1) {
-            for (int i = 0; i < path.Count - 1; i++) {
-                Gizmos.DrawLine(path[i].transform.position, path[i + 1].transform.position);
+                Gizmos.DrawLine(new Vector3((float)edge.Start.X, 0, (float)edge.Start.Y), new Vector3((float)edge.End.X, 0, (float)edge.End.Y));
             }
         }
 

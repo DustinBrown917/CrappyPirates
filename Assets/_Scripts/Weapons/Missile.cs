@@ -29,8 +29,6 @@ public class Missile : Projectile
     protected virtual void FixedUpdate()
     {
         if (shouldAccelerate) {
-
-
             Body.velocity += transform.forward * acceleration * Time.fixedDeltaTime;
 
             if(maxSpeed > 0 && Body.velocity.magnitude > maxSpeed) {
