@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,6 +30,7 @@ public class NavigationModule : ShipModule
         base.Initialize();
     }
 
+    [Client]
     protected override void SetUpUI()
     {
         NavigationUI ui = Instantiate(UIModulePrefab, ShipUICanvas.Canvas.transform).GetComponent<NavigationUI>();

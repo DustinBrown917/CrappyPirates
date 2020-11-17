@@ -28,14 +28,15 @@ public class FocusCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(focusTarget != null) {
+            Vector3 newPos = transform.position;
+            newPos.x = Mathf.SmoothDamp(transform.position.x, focusTarget.transform.position.x, ref xVel, transSmoothTime);
+            newPos.z = Mathf.SmoothDamp(transform.position.z, focusTarget.transform.position.z, ref zVel, transSmoothTime);
 
-        Vector3 newPos = transform.position;
-        newPos.x = Mathf.SmoothDamp(transform.position.x, focusTarget.transform.position.x, ref xVel, transSmoothTime);
-        newPos.z = Mathf.SmoothDamp(transform.position.z, focusTarget.transform.position.z, ref zVel, transSmoothTime);
-        
 
-        if(useRot) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, Mathf.SmoothDampAngle(transform.rotation.eulerAngles.y, focusTarget.transform.rotation.eulerAngles.y, ref rotVel, rotSmoothTime), 0);
+            if (useRot) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, Mathf.SmoothDampAngle(transform.rotation.eulerAngles.y, focusTarget.transform.rotation.eulerAngles.y, ref rotVel, rotSmoothTime), 0);
 
-        transform.position = newPos;
+            transform.position = newPos;
+        }
     }
 }

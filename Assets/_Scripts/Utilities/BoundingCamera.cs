@@ -9,6 +9,7 @@ public class BoundingCamera : MonoBehaviour
     private Camera cam = null;
     [SerializeField] private float maxY = 20.0f;
     [SerializeField] private float minY = 10.0f;
+    [SerializeField] private float extraOffset = 1.2f;
 
     private void Awake()
     {
@@ -45,7 +46,7 @@ public class BoundingCamera : MonoBehaviour
             else if (bop.x < bottomLeft.x) { bottomLeft.x = bop.x; }
         }
 
-        float newY = (topRight - bottomLeft).magnitude;
+        float newY = (topRight - bottomLeft).magnitude  *extraOffset;
 
         return new Vector3((topRight.x + bottomLeft.x) * 0.5f, Mathf.Clamp(newY, minY, maxY), (topRight.z + bottomLeft.z) * 0.5f);
     }

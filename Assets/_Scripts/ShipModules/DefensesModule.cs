@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ public class DefensesModule : ShipModule
         yield return null;
     }
 
+    [Client]
     protected override void SetUpUI()
     {
         DefensesUI ui = Instantiate(UIModulePrefab, ShipUICanvas.Canvas.transform).GetComponent<DefensesUI>();

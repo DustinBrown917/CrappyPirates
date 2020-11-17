@@ -10,6 +10,10 @@ namespace CrappyPirates
 {
     public class CP_NetworkManager : NetworkManager
     {
+
+        private static CP_NetworkManager instance_ = null;
+        public static CP_NetworkManager Instance { get => instance_; }
+
         [SerializeField] private int minPlayers = 2;
         [Scene] [SerializeField] private string menuScene = string.Empty;
         [SerializeField] private NetworkPlayer_Lobby lobbyPlayerPrefab = null;
@@ -19,9 +23,31 @@ namespace CrappyPirates
 
         public static event EventHandler<PlayerConnectionArgs> OnPlayerConnected;
         public static event EventHandler<PlayerConnectionArgs> OnPlayerDisconnected;
+
+        public static event Action<NetworkConnection> OnServerReadied;
         
-        [SerializeField, ReadOnly] private List<NetworkPlayer_Lobby> currentlyConnectedPlayers_ = new List<NetworkPlayer_Lobby>();
+        [SerializeField, ReadOnly] public List<NetworkPlayer_Lobby> currentlyConnectedPlayers_ = new List<NetworkPlayer_Lobby>();
         public int CurrentlyConnectedPlayerCount { get => currentlyConnectedPlayers_.Count; }
+
+        public override void Awake()
+        {
+            if(instance_ != null) {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance_ = this;
+
+            base.Awake();
+
+        }
+
+        
+
+        public override void OnDestroy()
+        {
+            if(instance_ == this) { instance_ = null; }
+        }
 
         public override void OnStartServer()
         {
@@ -103,6 +129,18 @@ namespace CrappyPirates
             currentlyConnectedPlayers_.Clear();
         }
 
+
+        public void StartGame()
+        {
+            //if (!IsReadyToStart()) { return; }
+            ServerChangeScene("NetworkGameScene");
+        }
+
+        public override void ServerChangeScene(string newSceneName)
+        {
+            base.ServerChangeScene(newSceneName);
+        }
+
         public void NotifyPlayersOfReadyState()
         {
             foreach (NetworkPlayer_Lobby player in currentlyConnectedPlayers_) {
@@ -136,6 +174,13 @@ namespace CrappyPirates
             }
 
             return true;
+        }
+
+        public override void OnServerReady(NetworkConnection conn)
+        {
+            base.OnServerReady(conn);
+
+            OnServerReadied?.Invoke(conn);
         }
 
         public class ClientConnectionArgs : EventArgs

@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
 
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-public class Projectile : MonoBehaviour
+public class Projectile : NetworkBehaviour
 {
     [SerializeField] private ProjectileTypes projectileType_ = default;
     [SerializeField] private ExplosionTypes explosionType = default;
@@ -18,10 +19,20 @@ public class Projectile : MonoBehaviour
     private Rigidbody body_ = null;
     public Rigidbody Body { get => body_; }
 
+    [SyncVar(hook = nameof(HandleEnabledChanged))]
+    private bool active_ = false;
+    public bool Active { get => active_; set => active_ = value; }
+
     protected virtual void Awake()
     {
         myCollider = GetComponent<Collider>();
         body_ = GetComponent<Rigidbody>();
+    }
+
+    public void HandleEnabledChanged(bool oldValue, bool newValue)
+    {
+        Debug.Log(newValue);
+        gameObject.SetActive(newValue);
     }
 
     public virtual void Arm(Rigidbody target, params Collider[] launcherColliders)
@@ -54,6 +65,7 @@ public class Projectile : MonoBehaviour
 
     private void StartIgnoringLaunchCollider(float duration)
     {
+        gameObject.SetActive(true);
         StopIgnoringLaunchColliders();
 
         cr_IgnoreLauncherCollider = StartCoroutine(IgnoreLauncherCollider(duration));

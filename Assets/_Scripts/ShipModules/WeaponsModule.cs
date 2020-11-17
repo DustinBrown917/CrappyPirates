@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Mirror;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using UnityEngine.Assertions.Must;
 
 public class WeaponsModule : ShipModule
 {
-    [SerializeField] private Rigidbody DEBUG_TARGET = null;
+    [SerializeField] public Rigidbody DEBUG_TARGET = null;
     [SerializeField] private Dictionary<Batteries, Battery> batteries = new Dictionary<Batteries, Battery>();
 
     private Batteries activeBattery_ = default;
@@ -134,6 +135,19 @@ public class WeaponsModule : ShipModule
         }
     }
 
+    [SerializeField] private bool fire_;
+    private void OnValidate()
+    {
+        if (fire_) {
+            fire_ = false;
+            DEBUG_FIRE();
+        }
+    }
+    public void DEBUG_FIRE()
+    {
+        batteries[activeBattery_].Fire(DEBUG_TARGET, 1.0f);
+    }
+
 
     public void ManualRotateBattery(Batteries battery, bool clockWise, float deltaTime)
     {
@@ -151,6 +165,7 @@ public class WeaponsModule : ShipModule
         return batteries[battery].fireArch;
     }
 
+    [Client]
     protected override void SetUpUI()
     {
         WeaponsUI ui = Instantiate(UIModulePrefab, ShipUICanvas.Canvas.transform).GetComponent<WeaponsUI>();

@@ -1,11 +1,12 @@
-﻿using Sirenix.OdinInspector;
+﻿using Mirror;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Weapon : MonoBehaviour
+public abstract class Weapon : NetworkBehaviour
 {
     public enum FireBlockers
     {
@@ -119,6 +120,8 @@ public abstract class Weapon : MonoBehaviour
     {
         public Rigidbody target = null;
         public float power = 0.0f;
+
+        public FiringParameters() { }
 
         public FiringParameters(Rigidbody target, float power)
         {

@@ -139,6 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2102560074612839377}
   - component: {fileID: 2102560074612839379}
+  - component: {fileID: 8197226105446857919}
   m_Layer: 0
   m_Name: SlugLauncher
   m_TagString: Untagged
@@ -174,6 +175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daedb2087f76204685b465b50d08e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   projectileType: 0
   launchPosition: {fileID: 2102560073878976044}
   collidersToIgnore:
@@ -193,6 +196,22 @@ MonoBehaviour:
   reloadTime: 3
   cooldownBetweenShots: 0.5
   requiresTarget_: 0
+--- !u!114 &8197226105446857919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102560074612839376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1001 &2102560073061309620
 PrefabInstance:
   m_ObjectHideFlags: 0

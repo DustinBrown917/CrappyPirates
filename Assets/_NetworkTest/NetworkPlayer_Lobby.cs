@@ -9,6 +9,9 @@ namespace CrappyPirates
 {
     public class NetworkPlayer_Lobby : NetworkBehaviour
     {
+        private static NetworkPlayer_Lobby localPlayer = null;
+        public static NetworkPlayer_Lobby LocalPlayer { get => localPlayer; }
+
         public bool IsLeader { get; set; }
 
         [SyncVar(hook = nameof(HandleDisplayNameChanged))]
@@ -34,6 +37,9 @@ namespace CrappyPirates
         public event EventHandler<ValueChangedArgs<ModuleTypes>> CommandingModuleChanged;
         public event EventHandler<ValueChangedArgs<int>> TeamChanged;
 
+
+        public NetworkShip ship = null;
+
         private CP_NetworkManager Room
         {
             get {
@@ -44,12 +50,14 @@ namespace CrappyPirates
 
         public override void OnStartAuthority()
         {
-            CmdSetDisplayName(PlayerPrefs.GetString(PlayerNameInput.PP_PLAYER_NAME_TAG, "Butts 2.0"));
+            CmdSetDisplayName(PlayerPrefs.GetString(PlayerNameInput.PP_PLAYER_NAME_TAG, "New Player"));
+            localPlayer = this;
         }
 
         public override void OnStartClient()
         {
             base.OnStartClient();
+            DontDestroyOnLoad(gameObject);
             Room.RegisterPlayer(this);
         }
 
@@ -103,6 +111,71 @@ namespace CrappyPirates
         public void CmdStartGame()
         {
             if(Room.GetPlayer(0).connectionToClient != connectionToClient) { return; } //Making sure we are the MVP (first player to join lobby)
+            Room.StartGame();
+        }
+
+        [Command] 
+        public void AccelerateShip()
+        {
+            if(ship != null) {
+                ship.Accelerate();
+            }
+        }
+
+        [Command]
+        public void DeccelerateShip()
+        {
+            if (ship != null) {
+                ship.Deccelerate();
+            }
+        }
+
+        [Command]
+        public void TurnShipRight()
+        {
+            if (ship != null) {
+                ship.TurnRight();
+            }
+        }
+
+        [Command]
+        public void TurnShipLeft()
+        {
+            if (ship != null) {
+                ship.TurnLeft();
+            }
+        }
+
+        [Command]
+        public void FireBattery()
+        {
+            if(ship != null) {
+                ship.Fire();
+            }
+        }
+
+        [Client]
+        private void FixedUpdate()
+        {
+            if (Input.GetKey(KeyCode.W)) {
+                AccelerateShip();
+            } else if (Input.GetKey(KeyCode.S)) {
+                DeccelerateShip();
+            }
+
+            if (Input.GetKey(KeyCode.D)) {
+                TurnShipRight();
+            } else if (Input.GetKey(KeyCode.A)) {
+                TurnShipLeft();
+            }
+        }
+
+        [Client]
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                FireBattery();
+            }
         }
 
         public void HandleReadyStateChanged(bool oldValue, bool newValue)

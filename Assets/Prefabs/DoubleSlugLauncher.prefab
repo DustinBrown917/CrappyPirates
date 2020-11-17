@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7112863942758824875}
   - component: {fileID: 7112863942758824873}
   - component: {fileID: 7112863942758824874}
+  - component: {fileID: 2190433811566330838}
   m_Layer: 0
   m_Name: DoubleSlugLauncher
   m_TagString: Untagged
@@ -47,8 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daedb2087f76204685b465b50d08e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 5296767624056246342, guid: 22fd59fdcf7ee65419bf693087ef1d5c,
-    type: 3}
+  syncMode: 0
+  syncInterval: 0.1
+  projectileType: 0
   launchPosition: {fileID: 7112863944553712268}
   collidersToIgnore:
   - {fileID: 0}
@@ -79,8 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daedb2087f76204685b465b50d08e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 5296767624056246342, guid: 22fd59fdcf7ee65419bf693087ef1d5c,
-    type: 3}
+  syncMode: 0
+  syncInterval: 0.1
+  projectileType: 0
   launchPosition: {fileID: 7112863944168804268}
   collidersToIgnore:
   - {fileID: 0}
@@ -99,6 +102,22 @@ MonoBehaviour:
   reloadTime: 3
   cooldownBetweenShots: 0.5
   requiresTarget_: 0
+--- !u!114 &2190433811566330838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7112863942758824876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &7112863944168804269
 GameObject:
   m_ObjectHideFlags: 0

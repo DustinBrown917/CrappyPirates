@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Ship))]
-public abstract class ShipModule : MonoBehaviour
+public abstract class ShipModule : NetworkBehaviour
 {
     [SerializeField] protected GameObject UIModulePrefab = null;
 
