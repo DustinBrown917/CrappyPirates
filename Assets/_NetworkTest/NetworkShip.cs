@@ -12,7 +12,10 @@ public class NetworkShip : NetworkBehaviour, ICameraFocusObject
 
     public GameObject projectilePrefab = null;
 
-    public Transform[] shootSpawnPoints = null;
+    public Transform[] forwardShootSpawnPoints = null;
+    public Transform[] portShootSpawnPoints = null;
+    public Transform[] starboardShootSpawnPoints = null;
+    public Transform[] rearShootSpawnPoints = null;
 
     [SyncVar]
     public int team = 0;
@@ -28,9 +31,42 @@ public class NetworkShip : NetworkBehaviour, ICameraFocusObject
     }
 
 
-    public void Fire()
+    public void FireForward()
     {
-        foreach(Transform t in shootSpawnPoints) {
+        foreach(Transform t in forwardShootSpawnPoints) {
+            NetworkProjectile p = Instantiate(projectilePrefab).GetComponent<NetworkProjectile>();
+            p.transform.position = t.position;
+            p.transform.rotation = t.rotation;
+            p.body.velocity = body.velocity + (p.transform.forward * projectileVelocity);
+            NetworkServer.Spawn(p.gameObject);
+        }
+    }
+
+    public void FirePort()
+    {
+        foreach (Transform t in portShootSpawnPoints) {
+            NetworkProjectile p = Instantiate(projectilePrefab).GetComponent<NetworkProjectile>();
+            p.transform.position = t.position;
+            p.transform.rotation = t.rotation;
+            p.body.velocity = body.velocity + (p.transform.forward * projectileVelocity);
+            NetworkServer.Spawn(p.gameObject);
+        }
+    }
+
+    public void FireStarboard()
+    {
+        foreach (Transform t in starboardShootSpawnPoints) {
+            NetworkProjectile p = Instantiate(projectilePrefab).GetComponent<NetworkProjectile>();
+            p.transform.position = t.position;
+            p.transform.rotation = t.rotation;
+            p.body.velocity = body.velocity + (p.transform.forward * projectileVelocity);
+            NetworkServer.Spawn(p.gameObject);
+        }
+    }
+
+    public void FireRear()
+    {
+        foreach (Transform t in rearShootSpawnPoints) {
             NetworkProjectile p = Instantiate(projectilePrefab).GetComponent<NetworkProjectile>();
             p.transform.position = t.position;
             p.transform.rotation = t.rotation;

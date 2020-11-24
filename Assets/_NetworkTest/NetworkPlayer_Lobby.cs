@@ -30,6 +30,9 @@ namespace CrappyPirates
         private int team_ = 0;
         public int Team { get => team_; }
 
+        private NetworkWeaponUI weaponUI = null;
+        private NetworkNavigationUI navUI = null;
+
         private CP_NetworkManager room_ = null;
 
         public event EventHandler<ValueChangedArgs<string>> DisplayNameChanged;
@@ -52,6 +55,46 @@ namespace CrappyPirates
         {
             CmdSetDisplayName(PlayerPrefs.GetString(PlayerNameInput.PP_PLAYER_NAME_TAG, "New Player"));
             localPlayer = this;
+            NetworkWeaponUI.InstanceUpdated += NetworkWeaponUI_InstanceUpdated;
+            NetworkNavigationUI.InstanceUpdated += NetworkNavigationUI_InstanceUpdated;
+        }
+
+        private void NetworkNavigationUI_InstanceUpdated()
+        {
+            navUI = NetworkNavigationUI.Instance;
+
+            if (weaponUI != null) {
+                if (commandingModule_ == ModuleTypes.NAVIGATION || commandingModule_ == ModuleTypes.NONE) {
+                    navUI.gameObject.SetActive(true);
+                } else {
+                    navUI.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private void NetworkWeaponUI_InstanceUpdated()
+        {
+            if(weaponUI != null) {
+                weaponUI.gameObject.SetActive(false);
+                weaponUI.FireForward -= FireForwardBattery;
+                weaponUI.FirePort -= FirePortBattery;
+                weaponUI.FireRear -= FireRearBattery;
+                weaponUI.FireStarboard -= FireStarboardBattery;
+            }
+
+            weaponUI = NetworkWeaponUI.Instance;
+
+            if (weaponUI != null) {
+                if (commandingModule_ == ModuleTypes.WEAPONS || commandingModule_ == ModuleTypes.NONE) {
+                    weaponUI.gameObject.SetActive(true);
+                    weaponUI.FireForward += FireForwardBattery;
+                    weaponUI.FirePort += FirePortBattery;
+                    weaponUI.FireRear += FireRearBattery;
+                    weaponUI.FireStarboard += FireStarboardBattery;
+                } else {
+                    weaponUI.gameObject.SetActive(false);
+                }
+            }
         }
 
         public override void OnStartClient()
@@ -147,16 +190,55 @@ namespace CrappyPirates
         }
 
         [Command]
-        public void FireBattery()
+        public void FireForwardBattery()
         {
             if(ship != null) {
-                ship.Fire();
+                ship.FireForward();
             }
         }
+
+        [Command]
+        public void FirePortBattery()
+        {
+            if (ship != null) {
+                ship.FirePort();
+            }
+        }
+
+        [Command]
+        public void FireStarboardBattery()
+        {
+            if (ship != null) {
+                ship.FireStarboard();
+            }
+        }
+
+        [Command]
+        public void FireRearBattery()
+        {
+            if (ship != null) {
+                ship.FireRear();
+            }
+        }
+
 
         [Client]
         private void FixedUpdate()
         {
+            if((commandingModule_ == ModuleTypes.NAVIGATION || commandingModule_ == ModuleTypes.NONE) && navUI != null) {
+                if(navUI.accelerate == 1) {
+                    AccelerateShip();
+                } else if(navUI.accelerate == -1) {
+                    DeccelerateShip();
+                }
+
+                if(navUI.turn == 1) {
+                    TurnShipRight();
+                } else if(navUI.turn == -1) {
+                    TurnShipLeft();
+                }
+            }
+
             if (Input.GetKey(KeyCode.W)) {
                 AccelerateShip();
             } else if (Input.GetKey(KeyCode.S)) {
@@ -174,7 +256,7 @@ namespace CrappyPirates
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space)) {
-                FireBattery();
+                FirePortBattery();
             }
         }
 
