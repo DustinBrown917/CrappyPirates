@@ -25,7 +25,7 @@ public class SeekerMissile : Missile
         StartDelayBeforeSteering();
     }
 
-    protected override void HandleImpact()
+    public override void HandleImpact()
     {
         base.HandleImpact();
         shouldSteer = false;

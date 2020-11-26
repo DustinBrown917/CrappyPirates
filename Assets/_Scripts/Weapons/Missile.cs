@@ -6,9 +6,13 @@ using UnityEngine;
 public class Missile : Projectile
 {
     [SerializeField] protected float acceleration = 1.0f;
+    public float Acceleration { get => acceleration; }
     [SerializeField] protected float maxSpeed = 3.0f;
+    public float MaxSpeed { get => maxSpeed; }
     [SerializeField] private float lifeTime = 10.0f;
+    public float LifeTime { get => lifeTime; }
     private float lifeTimeRemaining = 10.0f;
+    public float LifeTimeRemaining { get => lifeTimeRemaining; }
     private bool shouldAccelerate = false;
 
     public override void Arm(Rigidbody target, params Collider[] launcherColliders)

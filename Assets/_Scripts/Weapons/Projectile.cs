@@ -23,6 +23,9 @@ public class Projectile : NetworkBehaviour
     private bool active_ = false;
     public bool Active { get => active_; set => active_ = value; }
 
+    protected bool armed_ = false;
+    public bool Armed { get => armed_; }
+
     protected virtual void Awake()
     {
         myCollider = GetComponent<Collider>();
@@ -39,6 +42,7 @@ public class Projectile : NetworkBehaviour
     {
         this.launcherColliders = launcherColliders;
         StartIgnoringLaunchCollider(ignoreLauncherColliderDuration);
+        armed_ = true;
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
@@ -46,7 +50,7 @@ public class Projectile : NetworkBehaviour
         HandleImpact();
     }
 
-    protected virtual void HandleImpact()
+    public virtual void HandleImpact()
     {
         Explosion e = ExplosionManager.RequestExplosion(explosionType);
         e.transform.position = transform.position;
@@ -61,6 +65,7 @@ public class Projectile : NetworkBehaviour
         Body.angularVelocity = new Vector3();
         ProjectileManager.PoolProjectile(this);
         StopIgnoringLaunchColliders();
+        armed_ = false;
     }
 
     private void StartIgnoringLaunchCollider(float duration)
