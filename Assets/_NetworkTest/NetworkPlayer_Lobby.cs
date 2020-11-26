@@ -41,7 +41,8 @@ namespace CrappyPirates
         public event EventHandler<ValueChangedArgs<int>> TeamChanged;
 
 
-        public NetworkShip ship = null;
+        private NetworkShip ship_ = null;
+        public NetworkShip Ship { get => ship_; }
 
         private CP_NetworkManager Room
         {
@@ -115,6 +116,19 @@ namespace CrappyPirates
             if (!IsLeader) { return; }
         }
 
+        public void SetShip(NetworkShip ship)
+        {
+            this.ship_ = ship;
+            ShowShipHealthbar();
+        }
+
+        public void ShowShipHealthbar()
+        {
+
+            Ship.ShowHealthBar();
+            
+        }
+
         [Command]
         private void CmdSetDisplayName(string displayName)
         {
@@ -160,64 +174,64 @@ namespace CrappyPirates
         [Command] 
         public void AccelerateShip()
         {
-            if(ship != null) {
-                ship.Accelerate();
+            if(ship_ != null) {
+                ship_.Accelerate();
             }
         }
 
         [Command]
         public void DeccelerateShip()
         {
-            if (ship != null) {
-                ship.Deccelerate();
+            if (ship_ != null) {
+                ship_.Deccelerate();
             }
         }
 
         [Command]
         public void TurnShipRight()
         {
-            if (ship != null) {
-                ship.TurnRight();
+            if (ship_ != null) {
+                ship_.TurnRight();
             }
         }
 
         [Command]
         public void TurnShipLeft()
         {
-            if (ship != null) {
-                ship.TurnLeft();
+            if (ship_ != null) {
+                ship_.TurnLeft();
             }
         }
 
         [Command]
         public void FireForwardBattery()
         {
-            if(ship != null) {
-                ship.FireForward();
+            if(ship_ != null) {
+                ship_.FireForward();
             }
         }
 
         [Command]
         public void FirePortBattery()
         {
-            if (ship != null) {
-                ship.FirePort();
+            if (ship_ != null) {
+                ship_.FirePort();
             }
         }
 
         [Command]
         public void FireStarboardBattery()
         {
-            if (ship != null) {
-                ship.FireStarboard();
+            if (ship_ != null) {
+                ship_.FireStarboard();
             }
         }
 
         [Command]
         public void FireRearBattery()
         {
-            if (ship != null) {
-                ship.FireRear();
+            if (ship_ != null) {
+                ship_.FireRear();
             }
         }
 

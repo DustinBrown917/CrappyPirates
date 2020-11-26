@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CrappyPirates;
+using UnityEngine.UI;
 
 public class NetworkShip : NetworkBehaviour, ICameraFocusObject
 {
@@ -25,11 +26,43 @@ public class NetworkShip : NetworkBehaviour, ICameraFocusObject
 
     public Vector3 Position => transform.position;
 
+    private Health health = null;
+
+    [SerializeField] private Slider healthBar = null;
+
+    private void Awake()
+    {
+        health = GetComponent<Health>();
+        //healthBar.gameObject.SetActive(false);
+    }
+
     public override void OnStartClient()
     {
         GameCamera.MainCamera.GetComponent<BoundingCamera>().AddBoundingObject(this);
+        health.OnHealthChanged += OnHealthChanged_Client;
+        healthBar.maxValue = health.Max;
+        healthBar.value = health.Current;
     }
 
+
+    private void OnHealthChanged_Client(float arg1, float arg2)
+    {
+        healthBar.value = health.Current;
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        health.OnHealthChanged += OnHealthChanged_Server;
+    }
+
+    private void OnHealthChanged_Server(float oldVal, float newVal)
+    {
+        if(newVal <= 0) {
+            Destroy(gameObject);
+        }
+    }
 
     public void FireForward()
     {
@@ -93,5 +126,10 @@ public class NetworkShip : NetworkBehaviour, ICameraFocusObject
     public void TurnLeft()
     {
         body.angularVelocity -= new Vector3(0, angularAcceleration * Time.fixedDeltaTime, 0);
+    }
+
+    public void ShowHealthBar()
+    {
+        healthBar.gameObject.SetActive(true);
     }
 }

@@ -55,9 +55,11 @@ namespace CrappyPirates
 
             foreach(NetworkPlayer_Lobby p in CP_NetworkManager.Instance.currentlyConnectedPlayers_) {
                 if(p.Team == 1) {
-                    p.ship = team1Ship;
+                    p.SetShip(team1Ship);
+                    p.ShowShipHealthbar();
                 } else {
-                    p.ship = team2Ship;
+                    p.SetShip(team2Ship);
+                    p.ShowShipHealthbar();
                 }
             }
         }
