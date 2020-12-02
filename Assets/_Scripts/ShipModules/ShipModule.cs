@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Ship))]
-public abstract class ShipModule : NetworkBehaviour
+public abstract class ShipModule : MonoBehaviour
 {
     [SerializeField] protected GameObject UIModulePrefab = null;
 

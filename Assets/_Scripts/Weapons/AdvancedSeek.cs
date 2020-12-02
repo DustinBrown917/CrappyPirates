@@ -29,6 +29,19 @@ public class AdvancedSeek : MonoBehaviour
         return (dir * acceleration) + compensation;
     }
 
+    public Vector3 GetSteering(Vector3 target)
+    {
+        Vector3 dir = (target - transform.position).normalized;
+
+        return dir * acceleration;
+    }
+
+    public Vector3 GetDeceleration()
+    {
+        Vector3 decel = Body.velocity.normalized * -1;    
+
+        return decel;
+    }
 
     /// <summary>
     /// Plain ol' seek. Orbits galore.
@@ -37,8 +50,6 @@ public class AdvancedSeek : MonoBehaviour
     public Vector3 GetSteering_Boring(Rigidbody target)
     {
         Vector3 dir = (target.position - transform.position).normalized;
-
-        Vector3 velNormal = Body.velocity.normalized;
 
         return dir * acceleration;
     }

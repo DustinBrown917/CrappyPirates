@@ -30,7 +30,7 @@ public class NavigationModule : ShipModule
         base.Initialize();
     }
 
-    [Client]
+
     protected override void SetUpUI()
     {
         NavigationUI ui = Instantiate(UIModulePrefab, ShipUICanvas.Canvas.transform).GetComponent<NavigationUI>();

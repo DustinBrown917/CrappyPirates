@@ -7,7 +7,7 @@ using CrappyPirates;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Ship : NetworkBehaviour, ICameraFocusObject
+public class Ship : MonoBehaviour, ICameraFocusObject
 {
     private NavigationModule navigation = null;
     private WeaponsModule weapons = null;
@@ -20,7 +20,6 @@ public class Ship : NetworkBehaviour, ICameraFocusObject
     public Sprite ShipIcon { get => shipIcon; }
     [SerializeField] private Dictionary<ThrusterGroups, List<Thruster>> thrusters = new Dictionary<ThrusterGroups, List<Thruster>>();
 
-    [SyncVar]
     private int team = 0;
     public int Team { get => team; }
 

@@ -6,6 +6,9 @@ using UnityEngine;
 public class DefensesModule : ShipModule
 {
 
+    [SerializeField] private bool defensesViable_ = true;
+    public bool DefensesViable { get => defensesViable_; }
+
     public override void Initialize()
     {
         base.Initialize();
@@ -21,7 +24,7 @@ public class DefensesModule : ShipModule
         yield return null;
     }
 
-    [Client]
+
     protected override void SetUpUI()
     {
         DefensesUI ui = Instantiate(UIModulePrefab, ShipUICanvas.Canvas.transform).GetComponent<DefensesUI>();
